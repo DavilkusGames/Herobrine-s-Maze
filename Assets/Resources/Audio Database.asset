@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4645132edefd4c74968a0c941a98fb89, type: 3}
+  m_Name: Audio Database
+  m_EditorClassIdentifier: 
+  _items:
+  - Clip: {fileID: 8300000, guid: b1555ae403950e141801d48cec0c882c, type: 3}
+    Key: elevatorSignal
+    FolderPath: 
+    Name: 
+    Preload: 1
+    _id: d07c3cd3-4f99-4fb1-b04c-95441ad497c2
+  - Clip: {fileID: 8300000, guid: 42da20118ad4d374d987dde296903b2a, type: 3}
+    Key: Step_5
+    FolderPath: 
+    Name: 
+    Preload: 1
+    _id: 54756d77-b09a-4016-a345-7093302482fa
+  - Clip: {fileID: 8300000, guid: 824999413d6d3124baab78a2bf41f8bd, type: 3}
+    Key: Step_1
+    FolderPath: 
+    Name: 
+    Preload: 1
+    _id: d6dd12ba-ea55-4e2d-895f-119ef9779a23
+  - Clip: {fileID: 8300000, guid: 33d0699a2acbb6c4bab3d5e61e2dde87, type: 3}
+    Key: menuMusic
+    FolderPath: 
+    Name: 
+    Preload: 1
+    _id: d949ec12-7234-4d12-987a-5118f5fd52e7
+  - Clip: {fileID: 8300000, guid: 4569137818db4104fbdd7a15e497ebee, type: 3}
+    Key: Step_6
+    FolderPath: 
+    Name: 
+    Preload: 1
+    _id: a0eb7bad-477f-4ca6-9dac-50bf667af9f1
+  - Clip: {fileID: 8300000, guid: 754d8f520faab8045b22458f21b7113a, type: 3}
+    Key: Step_4
+    FolderPath: 
+    Name: 
+    Preload: 1
+    _id: 0c2e4c45-186a-4390-9dc9-539a8de34463
+  - Clip: {fileID: 8300000, guid: e5b34735ba9139d418bd4dad6af8466c, type: 3}
+    Key: mtBeep
+    FolderPath: 
+    Name: 
+    Preload: 1
+    _id: 3acffc9d-e40a-42b5-9e97-02a7982ac9e4
+  - Clip: {fileID: 8300000, guid: 267a4ff0dbdc7da4897adff7e2c406fc, type: 3}
+    Key: elevatorRide
+    FolderPath: 
+    Name: 
+    Preload: 1
+    _id: 5558cffb-8e26-4d34-9318-11646b4a5a81
+  - Clip: {fileID: 8300000, guid: b8c65a4b5046b384e9bccb87ef5f36d5, type: 3}
+    Key: Step_8
+    FolderPath: 
+    Name: 
+    Preload: 1
+    _id: 50463e9f-8680-48e8-8ad7-32023dde1b82
+  - Clip: {fileID: 8300000, guid: e81ce9560b32c2040b3e77f7d501ece9, type: 3}
+    Key: Step_3
+    FolderPath: 
+    Name: 
+    Preload: 1
+    _id: 24286a09-cb63-4b54-9942-54b96e2b277d
+  - Clip: {fileID: 8300000, guid: f90978b26a095da4d89709f4c524fdc8, type: 3}
+    Key: ambience
+    FolderPath: 
+    Name: 
+    Preload: 1
+    _id: 57aabeb1-c18a-436b-bacb-749e364cf4a8
+  - Clip: {fileID: 8300000, guid: 6b5b1f0734ecd6a40a028d5da0bf7ef4, type: 3}
+    Key: leverFlip
+    FolderPath: 
+    Name: 
+    Preload: 1
+    _id: 2de4e3ca-2833-44cb-b02b-5ab33dde89ef
+  - Clip: {fileID: 8300000, guid: 4e31baadf7980fd47901e2781adae6cc, type: 3}
+    Key: elevatorDoors
+    FolderPath: 
+    Name: 
+    Preload: 1
+    _id: 09dab965-367e-418d-ad41-235e40f9d3f8
+  - Clip: {fileID: 8300000, guid: ae8e0b4c8e7a98340bc5a9f8b49196a5, type: 3}
+    Key: Step_2
+    FolderPath: 
+    Name: 
+    Preload: 1
+    _id: 6f307f85-be40-4175-8ab4-1ddd0eec8a80
+  - Clip: {fileID: 8300000, guid: def170fea4a9a764b868c9bae26bb919, type: 3}
+    Key: Step_7
+    FolderPath: 
+    Name: 
+    Preload: 1
+    _id: ac830165-364d-4d90-bd92-41ce638b41ae
