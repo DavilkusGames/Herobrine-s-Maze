@@ -1,7 +1,6 @@
 using Plugins.Audio.Core;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
@@ -10,7 +9,12 @@ public class MainMenuManager : MonoBehaviour
     public TMP_Text versionTxt;
     public string devGamesURL = string.Empty;
 
+    public GameObject[] levelsLockPanels;
+    public GameObject[] levelsCompleteIcons;
+
     public static MainMenuManager Instance { get; private set; }
+
+    private int selectedLevelId = 0;
 
     public void DataLoaded(bool firstTime)
     {
@@ -22,12 +26,24 @@ public class MainMenuManager : MonoBehaviour
             GameData.data.prevGameVersion = Application.version.ToString();
             GameData.SaveData();
         }
+
+        for (int i = 0; i < levelsLockPanels.Length; i++) levelsLockPanels[i].SetActive(!GameData.data.levelsUnlocked[i]);
+        for (int i = 0; i < levelsCompleteIcons.Length; i++) levelsCompleteIcons[i].SetActive(GameData.data.levelsCompleted[i]);
+    }
+    
+    public void PlayGame(int levelId)
+    {
+        if (GameData.data.levelsUnlocked[levelId])
+        {
+            loadingPanel.SetActive(true);
+            selectedLevelId = levelId;
+            Invoke(nameof(LoadLevel), 2f);
+        }
     }
 
-    public void PlayGame(int mapId)
+    public void LoadLevel()
     {
-        loadingPanel.SetActive(true);
-        SceneManager.LoadScene(mapId+1);
+        SceneManager.LoadScene(selectedLevelId+1);
     }
 
     public void MoreGames()

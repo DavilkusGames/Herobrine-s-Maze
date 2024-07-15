@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public int levelId = 0;
     public GameObject pausePanel;
     public GameObject[] keyTips;
     public TextTranslator leverCountTxt;
@@ -49,6 +50,7 @@ public class GameManager : MonoBehaviour
         elevator = GameObject.FindGameObjectWithTag("Elevator").GetComponent<ElevatorCntrl>();
         targetLeverCount = GameObject.FindGameObjectsWithTag("Lever").Length;
         UpdateLeverCount();
+        blackPanel.FadeOut();
     }
 
     public bool LeverTurned()
@@ -96,6 +98,12 @@ public class GameManager : MonoBehaviour
 
     public void LevelCompleted()
     {
+        GameData.data.levelsCompleted[levelId] = true;
+        GameData.data.levelsCompletedCount++;
+        GameData.SaveData();
+
+        YandexGames.Instance?.SaveToLeaderboard(GameData.data.levelsCompletedCount);
+
         blackPanel.FadeIn(ToMainMenu);
     }
 

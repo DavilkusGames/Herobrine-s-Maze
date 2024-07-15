@@ -6,7 +6,10 @@ public class GameData
     public static bool dataLoaded = false;
 
     // SAVE DATA
-    
+    public bool[] levelsUnlocked = { true, false, false };
+    public bool[] levelsCompleted = { false, false, false };
+    public int levelsCompletedCount = 0;
+    public float sensitivity = 4f;
     public string prevGameVersion = string.Empty;
     // =======================
 
