@@ -1,4 +1,3 @@
-using Plugins.Audio.Core;
 using UnityEngine;
 
 public class ElevatorCntrl : MonoBehaviour
@@ -34,5 +33,6 @@ public class ElevatorCntrl : MonoBehaviour
     public void AnimEnd()
     {
         GameManager.Instance.LevelCompleted();
+        GameObject.FindGameObjectWithTag("Scanner").GetComponent<ScannerCntrl>().SetState(false);
     }
 }

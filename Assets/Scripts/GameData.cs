@@ -9,7 +9,8 @@ public class GameData
     public bool[] levelsUnlocked = { true, false, false };
     public bool[] levelsCompleted = { false, false, false };
     public int levelsCompletedCount = 0;
-    public float sensitivity = 4f;
+    public float sensitivity = 2f;
+    public bool soundEnabled = true;
     public string prevGameVersion = string.Empty;
     // =======================
 

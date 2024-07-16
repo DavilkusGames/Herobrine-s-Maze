@@ -13,6 +13,7 @@ public class PlayerCntrl : MonoBehaviour
     public Vector2 yBorders = Vector2.zero;
 
     public GameObject mobileControls;
+    public JoystickRight rightJoystick;
 
     public GameObject interactBtn;
     public float interactMaxDist = 5f;
@@ -120,5 +121,11 @@ public class PlayerCntrl : MonoBehaviour
         interactBtn.SetActive(interactObj != null);
         crosshairs[0].SetActive(interactObj == null);
         crosshairs[1].SetActive(interactObj != null);
+    }
+
+    public void SetSensitivity(float sens)
+    {
+        sensitivity = sens;
+        rightJoystick.sensitivity = sens;
     }
 }

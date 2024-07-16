@@ -71,11 +71,7 @@ public class YandexGames : MonoBehaviour
     public void AddToTranslateQueue(TextTranslator sender)
     {
         translateQueue.Add(sender);
-        if (IsInit || Application.isEditor)
-        {
-            sender.Translate(IsRus);
-            translateQueue.Remove(sender);
-        }
+        if (IsInit || Application.isEditor) sender.UpdateText();
     }
 
     public void RemoveFromTranslateQueue(TextTranslator sender)
@@ -97,7 +93,7 @@ public class YandexGames : MonoBehaviour
         if (!Application.isEditor) StartCoroutine(nameof(WaitForSDKInit));
     }
 
-    public void ShowAd(Action callback)
+    public void ShowAd(Action callback=null)
     {
         if (Application.isEditor || !IsInit)
         {
@@ -121,12 +117,12 @@ public class YandexGames : MonoBehaviour
         }
     }
 
-    public void ShowRewarded(RewardedCallback callback)
+    public void ShowRewarded(RewardedCallback callback=null)
     {
         if (Application.isEditor || !IsInit)
         {
             Debug.Log("Rewarded ad cannot be shown in editor or SDK not initialized");
-            callback(false);
+            callback(true);
             return;
         }
 
@@ -143,7 +139,7 @@ public class YandexGames : MonoBehaviour
 
     public void RewardedClosed()
     {
-        AudioListener.volume = 1f;
+        if (GameData.data.soundEnabled) AudioListener.volume = 1f;
         if (rewardedCallback != null)
         {
             rewardedCallback(isRewarded);
@@ -153,7 +149,7 @@ public class YandexGames : MonoBehaviour
 
     public void AdShown()
     {
-        AudioListener.volume = 1f;
+        if (GameData.data.soundEnabled) AudioListener.volume = 1f;
         if (adCallback != null)
         {
             adCallback();
@@ -212,6 +208,12 @@ public class YandexGames : MonoBehaviour
         if (IsInit) GameReady();
     }
 
+    public void ForceLang(int langId)
+    {
+        IsRus = (langId == 0);
+        foreach (var text in translateQueue) text.UpdateText();
+    }
+
     private IEnumerator WaitForSDKInit()
     {
         yield return new WaitForSeconds(0.5f);
@@ -221,11 +223,7 @@ public class YandexGames : MonoBehaviour
         IsRus = RusLangDomens.Contains(GetLang());
         IsMobile = IsMobilePlatform();
         Debug.Log("IsRus: " + IsRus.ToString());
-        for (int i = 0; i < translateQueue.Count; i++)
-        {
-            translateQueue[i].Translate(IsRus);
-        }
-        translateQueue.Clear();
+        foreach (var text in translateQueue) text.UpdateText();
 
         while (!PlayerInit()) yield return new WaitForSeconds(0.2f);
         IsAuth = AuthCheck();

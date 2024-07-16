@@ -1,4 +1,5 @@
 using Plugins.Audio.Core;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,7 +12,12 @@ public class GameManager : MonoBehaviour
     public GameObject[] keyTips;
     public TextTranslator leverCountTxt;
     public TextTranslator escapeTxt;
+    public GameObject levelCompletedTxt;
     public BlackPanelCntrl blackPanel;
+
+    public Slider sensitivitySlider;
+    public Toggle soundToggle;
+    public TMP_Dropdown languageDropdown;
 
     private bool isMobile = false;
     private bool isPaused = false;
@@ -20,7 +26,9 @@ public class GameManager : MonoBehaviour
 
     private int leverCount = 0;
     private int targetLeverCount = 0;
+    private bool unsavedSettings = false;
 
+    private PlayerCntrl player;
     private HerobrineCntrl herobrine;
     private ElevatorCntrl elevator;
 
@@ -46,11 +54,17 @@ public class GameManager : MonoBehaviour
             foreach (var keyTip in keyTips) keyTip.SetActive(false);
         }
 
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCntrl>();
         herobrine = GameObject.FindGameObjectWithTag("Herobrine").GetComponent<HerobrineCntrl>();
         elevator = GameObject.FindGameObjectWithTag("Elevator").GetComponent<ElevatorCntrl>();
         targetLeverCount = GameObject.FindGameObjectsWithTag("Lever").Length;
         UpdateLeverCount();
         blackPanel.FadeOut();
+
+        player.SetSensitivity(GameData.data.sensitivity);
+        sensitivitySlider.value = GameData.data.sensitivity;
+        soundToggle.isOn = GameData.data.soundEnabled;
+        languageDropdown.value = YandexGames.IsRus ? 0 : 1;
     }
 
     public bool LeverTurned()
@@ -79,7 +93,11 @@ public class GameManager : MonoBehaviour
 
     private void UpdateLeverCount()
     {
-        leverCountTxt.AddAdditionalText(leverCount.ToString() + '/' + targetLeverCount.ToString());
+        StringBuilder sb = new StringBuilder();
+        sb.Append(leverCount);
+        sb.Append('/');
+        sb.Append(targetLeverCount);
+        leverCountTxt.AddAdditionalText(sb.ToString());
     }
 
     private void Update()
@@ -90,8 +108,8 @@ public class GameManager : MonoBehaviour
     public void PauseState(bool state)
     {
         isPaused = state;
-        Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
-        AudioListener.volume = isPaused ? 0f : 1f;
+        if (isMobile) Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
+        AudioListener.volume = isPaused || !GameData.data.soundEnabled ? 0f : 1f;
         Time.timeScale = isPaused ? 0f : 1f;
         pausePanel.SetActive(isPaused);
     }
@@ -99,18 +117,57 @@ public class GameManager : MonoBehaviour
     public void LevelCompleted()
     {
         GameData.data.levelsCompleted[levelId] = true;
+        if (levelId < GameData.data.levelsUnlocked.Length - 1) GameData.data.levelsUnlocked[levelId+1] = true;
         GameData.data.levelsCompletedCount++;
         GameData.SaveData();
 
         YandexGames.Instance?.SaveToLeaderboard(GameData.data.levelsCompletedCount);
 
-        blackPanel.FadeIn(ToMainMenu);
+        blackPanel.FadeIn(() =>
+        {
+            levelCompletedTxt.SetActive(true);
+            AudioListener.volume = 0f;
+            Invoke(nameof(ToMainMenu), 4f);
+        });
     }
 
     public void ToMainMenu()
     {
         Time.timeScale = 1f;
-        AudioListener.volume = 1f;
-        SceneManager.LoadScene(0);
+        if (GameData.data.soundEnabled) AudioListener.volume = 1f;
+        YandexGames.Instance.ShowAd(() => SceneManager.LoadScene(0));
+    }
+
+    public void ChangeSensitivity(float sens)
+    {
+        if (GameData.data.sensitivity == sens) return;
+        GameData.data.sensitivity = sens;
+        player.SetSensitivity(sens);
+        unsavedSettings = true;
+    }
+
+    public void ChangeSoundState(bool state)
+    {
+        if (GameData.data.soundEnabled == state) return;
+        GameData.data.soundEnabled = state;
+        unsavedSettings = true;
+        AudioListener.volume = GameData.data.soundEnabled ? 1f : 0f;
+    }
+
+    public void ForceChangeLang(int langId)
+    {
+        if ((langId == 1 && YandexGames.IsRus) || (langId == 0 && !YandexGames.IsRus))
+        {
+            YandexGames.Instance.ForceLang(langId);
+        }
+    }
+
+    public void ApplySettings()
+    {
+        if (unsavedSettings)
+        {
+            GameData.SaveData();
+            unsavedSettings = false;
+        }
     }
 }

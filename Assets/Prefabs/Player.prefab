@@ -183,10 +183,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 7404258461740952397}
   playerAnim: {fileID: 7640635153186688732}
-  moveSpeed: 8
-  sensitivity: 4
+  moveSpeed: 7.5
+  sensitivity: 2
   yBorders: {x: -90, y: 90}
   mobileControls: {fileID: 0}
+  rightJoystick: {fileID: 0}
   interactBtn: {fileID: 0}
   interactMaxDist: 3
   crosshairs:

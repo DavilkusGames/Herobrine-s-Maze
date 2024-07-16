@@ -2,6 +2,7 @@ using Plugins.Audio.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -11,10 +12,17 @@ public class MainMenuManager : MonoBehaviour
 
     public GameObject[] levelsLockPanels;
     public GameObject[] levelsCompleteIcons;
+    public GameObject adConfirmPanel;
+
+    public Slider sensitivitySlider;
+    public Toggle soundToggle;
+    public TMP_Dropdown languageDropdown;
 
     public static MainMenuManager Instance { get; private set; }
 
-    private int selectedLevelId = 0;
+    private int selectedLevelId = -1;
+    private int levelAdsUnlockId = -1;
+    private bool unsavedSettings = false;
 
     public void DataLoaded(bool firstTime)
     {
@@ -29,8 +37,13 @@ public class MainMenuManager : MonoBehaviour
 
         for (int i = 0; i < levelsLockPanels.Length; i++) levelsLockPanels[i].SetActive(!GameData.data.levelsUnlocked[i]);
         for (int i = 0; i < levelsCompleteIcons.Length; i++) levelsCompleteIcons[i].SetActive(GameData.data.levelsCompleted[i]);
+
+        sensitivitySlider.value = GameData.data.sensitivity;
+        soundToggle.isOn = GameData.data.soundEnabled;
+        languageDropdown.value = YandexGames.IsRus ? 0 : 1;
+        AudioListener.volume = GameData.data.soundEnabled ? 1f : 0f;
     }
-    
+
     public void PlayGame(int levelId)
     {
         if (GameData.data.levelsUnlocked[levelId])
@@ -39,11 +52,33 @@ public class MainMenuManager : MonoBehaviour
             selectedLevelId = levelId;
             Invoke(nameof(LoadLevel), 2f);
         }
+        else
+        {
+            levelAdsUnlockId = levelId;
+            adConfirmPanel.SetActive(true);
+        }
+    }
+
+    public void ConfirmAdsLevelUnlock()
+    {
+        loadingPanel.SetActive(true);
+        YandexGames.Instance.ShowRewarded((bool wasRewarded) =>
+        {
+            loadingPanel.SetActive(false);
+            adConfirmPanel.SetActive(false);
+            if (wasRewarded)
+            {
+                GameData.data.levelsUnlocked[levelAdsUnlockId] = true;
+                GameData.SaveData();
+
+                levelsLockPanels[levelAdsUnlockId].SetActive(false);
+            }
+        });
     }
 
     public void LoadLevel()
     {
-        SceneManager.LoadScene(selectedLevelId+1);
+        SceneManager.LoadScene(selectedLevelId + 1);
     }
 
     public void MoreGames()
@@ -79,5 +114,37 @@ public class MainMenuManager : MonoBehaviour
             Instance = null;
         }
         CancelInvoke();
+    }
+
+    public void ChangeSensitivity(float sens)
+    {
+        if (GameData.data.sensitivity == sens) return;
+        GameData.data.sensitivity = sens;
+        unsavedSettings = true;
+    }
+
+    public void ChangeSoundState(bool state)
+    {
+        if (GameData.data.soundEnabled == state) return;
+        GameData.data.soundEnabled = state;
+        unsavedSettings = true;
+        AudioListener.volume = GameData.data.soundEnabled ? 1f : 0f;
+    }
+
+    public void ForceChangeLang(int langId)
+    {
+        if ((langId == 1 && YandexGames.IsRus) || (langId == 0 && !YandexGames.IsRus))
+        {
+            YandexGames.Instance.ForceLang(langId);
+        }
+    }
+
+    public void ApplySettings()
+    {
+        if (unsavedSettings)
+        {
+            GameData.SaveData();
+            unsavedSettings = false;
+        }
     }
 }

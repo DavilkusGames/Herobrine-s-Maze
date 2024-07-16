@@ -27,6 +27,7 @@ public class ScannerCntrl : MonoBehaviour
 
     private float prevBeepTime = 0f;
     private float beepDelay = 1f;
+    private bool isActive = true;
 
     private void Start()
     {
@@ -41,7 +42,9 @@ public class ScannerCntrl : MonoBehaviour
     private void Update()
     {
         radarGradient.Rotate(Vector3.forward * radarGradientRotSpeed * Time.deltaTime);
+        enemyMarkImg.color = Color.Lerp(enemyMarkImg.color, new Color(1f, 0f, 0f, 0f), Time.deltaTime * markColorLerp);
 
+        if (!isActive) return;
         float enemyDist = DistanceToEnemy();
         if (enemyDist <= maxEnemyDistance)
         {
@@ -53,7 +56,6 @@ public class ScannerCntrl : MonoBehaviour
                 prevBeepTime = Time.time;
             }
         }
-        enemyMarkImg.color = Color.Lerp(enemyMarkImg.color, new Color(1f, 0f, 0f, 0f), Time.deltaTime * markColorLerp);
     }
 
     private void UpdateEnemyMarkPos(float enemyDist)
@@ -91,5 +93,10 @@ public class ScannerCntrl : MonoBehaviour
         float zD = herobrine.position.z - playerCam.position.z;
         float dist2 = xD * xD + zD * zD;
         return dist2;
+    }
+
+    public void SetState(bool state)
+    {
+        isActive = state;
     }
 }
