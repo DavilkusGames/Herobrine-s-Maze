@@ -20,7 +20,7 @@ public class MenuHerobrineCntrl : MonoBehaviour
 
     private void Update()
     {
-        if (agent.remainingDistance > 0 && agent.remainingDistance < 0.5f)
+        if (agent.remainingDistance < 0.5f && !agent.pathPending)
         {
             pathPointId++;
             if (pathPointId >= menuPathPoints.Length) pathPointId = 0;
