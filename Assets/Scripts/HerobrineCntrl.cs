@@ -1,3 +1,4 @@
+using Plugins.Audio.Core;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -21,6 +22,7 @@ public class HerobrineCntrl : MonoBehaviour
     public float chaseAnimSpeed = 2.5f;
 
     private NavMeshAgent agent;
+    private SourceAudio sfx;
     private Transform player;
     private Transform trans;
     private AIState state = AIState.Disabled;
@@ -32,6 +34,7 @@ public class HerobrineCntrl : MonoBehaviour
     {
         trans = transform;
         agent = GetComponent<NavMeshAgent>();
+        sfx = GetComponent<SourceAudio>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
         state = AIState.Patrolling;
@@ -85,6 +88,7 @@ public class HerobrineCntrl : MonoBehaviour
         {
             case AIState.Disabled:
                 pathPointId = -1;
+                agent.enabled = false;
                 break;
             case AIState.Patrolling:
                 agent.speed = normalSpeed;
@@ -99,6 +103,7 @@ public class HerobrineCntrl : MonoBehaviour
                 agent.speed = chaseSpeed;
                 anim.speed = chaseAnimSpeed;
                 pathPointId = -1;
+                sfx.PlayOneShot("startChase");
                 break;
             case AIState.DisablingLever:
                 agent.speed = alertedSpeed;
@@ -162,5 +167,22 @@ public class HerobrineCntrl : MonoBehaviour
     {
         ChangeState(AIState.Chase);
         stateLocked = true;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            trans.LookAt(player);
+            player.GetComponent<PlayerCntrl>().GameOver(trans);
+            anim.Play("killAnim");
+            sfx.PlayOneShot("jumpscare");
+            ChangeState(AIState.Disabled);
+        }
+    }
+
+    public void KillAnimEnd()
+    {
+        GameManager.Instance.GameOver();
     }
 }

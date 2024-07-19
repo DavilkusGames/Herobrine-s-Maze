@@ -131,6 +131,12 @@ public class GameManager : MonoBehaviour
         });
     }
 
+    public void GameOver()
+    {
+        DeathSceneManager.FailedLevelId = levelId;
+        SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings-1);
+    }
+
     public void ToMainMenu()
     {
         Time.timeScale = 1f;

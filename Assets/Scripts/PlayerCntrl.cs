@@ -7,6 +7,7 @@ public class PlayerCntrl : MonoBehaviour
 {
     public Transform cam;
     public Animator playerAnim;
+    public GameObject model;
 
     public float moveSpeed = 4f;
     public float sensitivity = 4f;
@@ -19,6 +20,7 @@ public class PlayerCntrl : MonoBehaviour
     public float interactMaxDist = 5f;
     public GameObject[] crosshairs;
     public float walkDelay = 1f;
+    public float jumpscareCamLerp = 7f;
 
     private CharacterController characterController;
     private Transform trans;
@@ -32,6 +34,12 @@ public class PlayerCntrl : MonoBehaviour
 
     private GameObject interactObj = null;
     private float prevWalkSfxTime = 0f;
+    private bool isAlive = true;
+
+    private GameObject canvas;
+    private GameObject scanner;
+
+    private Quaternion targetJumpscareRot;
 
     private void Start()
     {
@@ -42,11 +50,14 @@ public class PlayerCntrl : MonoBehaviour
         isMobile = YandexGames.IsMobile;
         mobileControls.SetActive(isMobile);
         moveSpeed /= 100f;
+
+        canvas = GameObject.Find("Canvas");
+        scanner = GameObject.Find("Scanner");
     }
 
     private void Update()
     {
-        if (Time.timeScale == 0f) return;
+        if (Time.timeScale == 0f || !isAlive) return;
 
         if (!isMobile) {
             camX += Input.GetAxis("Mouse X") * sensitivity;
@@ -75,9 +86,17 @@ public class PlayerCntrl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E)) Interact();
     }
 
+    private void LateUpdate()
+    {
+        if (!isAlive)
+        {
+            cam.rotation = Quaternion.Lerp(cam.rotation, targetJumpscareRot, jumpscareCamLerp*Time.deltaTime);
+        }
+    }
+
     private void FixedUpdate()
     {
-        if (Time.timeScale == 0f) return;
+        if (Time.timeScale == 0f || !isAlive) return;
         CheckInteractionRaycast();
 
         if (!isMobile)
@@ -127,5 +146,15 @@ public class PlayerCntrl : MonoBehaviour
     {
         sensitivity = sens;
         rightJoystick.sensitivity = sens;
+    }
+
+    public void GameOver(Transform herobrine)
+    {
+        isAlive = false;
+        targetJumpscareRot = Quaternion.LookRotation(herobrine.position - trans.position);
+        mobileControls.SetActive(false);
+        canvas.SetActive(false);
+        scanner.SetActive(false);
+        model.SetActive(false);
     }
 }
