@@ -21,6 +21,8 @@ public class HerobrineCntrl : MonoBehaviour
     public float alertedAnimSpeed = 2f;
     public float chaseAnimSpeed = 2.5f;
 
+    public float chaseStartSoundCD = 20f;
+
     private NavMeshAgent agent;
     private SourceAudio sfx;
     private Transform player;
@@ -29,6 +31,7 @@ public class HerobrineCntrl : MonoBehaviour
     private int pathPointId = -1;
     private LeverCntrl leverToDisable = null;
     private bool stateLocked = false;
+    private float prevChaseSoundTime = -100f;
 
     private void Start()
     {
@@ -88,6 +91,7 @@ public class HerobrineCntrl : MonoBehaviour
         {
             case AIState.Disabled:
                 pathPointId = -1;
+                agent.isStopped = true;
                 agent.enabled = false;
                 break;
             case AIState.Patrolling:
@@ -103,7 +107,8 @@ public class HerobrineCntrl : MonoBehaviour
                 agent.speed = chaseSpeed;
                 anim.speed = chaseAnimSpeed;
                 pathPointId = -1;
-                sfx.PlayOneShot("startChase");
+                if (prevChaseSoundTime < Time.time + chaseStartSoundCD)
+                    sfx.PlayOneShot("startChase");
                 break;
             case AIState.DisablingLever:
                 agent.speed = alertedSpeed;

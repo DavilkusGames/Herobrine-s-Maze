@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _provider: 0
-  _volume: 1
+  _volume: 0.7
   _loop: 0
   _mute: 0
   _pitch: 1
