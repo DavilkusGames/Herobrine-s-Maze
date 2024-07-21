@@ -104,6 +104,13 @@ MonoBehaviour:
   normalAnimSpeed: 1.5
   alertedAnimSpeed: 2
   chaseAnimSpeed: 2.5
+  chaseTime: 15
+  defaultLayerMask:
+    serializedVersion: 2
+    m_Bits: 193
+  withoutPlayerLayerMask:
+    serializedVersion: 2
+    m_Bits: 65
 --- !u!114 &1927389951968996898
 MonoBehaviour:
   m_ObjectHideFlags: 0

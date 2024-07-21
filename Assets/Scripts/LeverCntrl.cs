@@ -8,6 +8,7 @@ public class LeverCntrl : MonoBehaviour
     public float playerToLightDist = 1f;
 
     private Transform player;
+    private PlayerCntrl playerCntrl;
     private Transform trans;
     private HerobrineCntrl herobrine;
     private Animator anim;
@@ -20,8 +21,11 @@ public class LeverCntrl : MonoBehaviour
         anim = GetComponent<Animator>();
         sfx = GetComponent<SourceAudio>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        playerCntrl = player.GetComponent<PlayerCntrl>();
         herobrine = GameObject.FindGameObjectWithTag("Herobrine").GetComponent<HerobrineCntrl>();
         leverLight.color = leverLightColors[0];
+
+        playerCntrl.Scanner.AddLeverToMarkList(trans);
     }
 
     private void Update()
@@ -44,6 +48,8 @@ public class LeverCntrl : MonoBehaviour
             herobrine.CheckLeverVisibility(this);
             herobrine.SoundReaction(player);
         }
+
+        playerCntrl.Scanner.RemoveLeverFromMarkList(trans);
     }
 
     public void Cancel()
@@ -55,5 +61,7 @@ public class LeverCntrl : MonoBehaviour
         leverLight.color = leverLightColors[0];
         anim.Play("leverCancel");
         sfx.Play("leverFlip");
+
+        playerCntrl.Scanner.AddLeverToMarkList(trans);
     }
 }

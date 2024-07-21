@@ -37,11 +37,13 @@ public class PlayerCntrl : MonoBehaviour
     private bool isAlive = true;
 
     private GameObject canvas;
-    private GameObject scanner;
+    private ScannerCntrl scanner;
 
     private Quaternion targetJumpscareRot;
 
-    private void Start()
+    public ScannerCntrl Scanner { get { return scanner; } private set { scanner = value; } } 
+
+    private void Awake()
     {
         characterController = GetComponent<CharacterController>();
         trans = GetComponent<Transform>();
@@ -52,7 +54,13 @@ public class PlayerCntrl : MonoBehaviour
         moveSpeed /= 100f;
 
         canvas = GameObject.Find("Canvas");
-        scanner = GameObject.Find("Scanner");
+        scanner = GameObject.Find("Scanner").GetComponent<ScannerCntrl>();
+        camX = trans.rotation.eulerAngles.y;
+        if (isMobile)
+        {
+            JoystickRight.rotY = 0f;
+            JoystickRight.rotX = camX;
+        }
     }
 
     private void Update()
@@ -154,7 +162,12 @@ public class PlayerCntrl : MonoBehaviour
         targetJumpscareRot = Quaternion.LookRotation(herobrine.position - trans.position);
         mobileControls.SetActive(false);
         canvas.SetActive(false);
-        scanner.SetActive(false);
+        scanner.gameObject.SetActive(false);
         model.SetActive(false);
+    }
+
+    public void InElevator()
+    {
+        gameObject.tag = "Untagged";
     }
 }

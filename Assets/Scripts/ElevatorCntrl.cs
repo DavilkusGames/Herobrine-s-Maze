@@ -20,6 +20,9 @@ public class ElevatorCntrl : MonoBehaviour
             isActive = false;
             doorsCollider.SetActive(true);
             anim.Play("Ride");
+            other.GetComponent<PlayerCntrl>().InElevator();
+            GameObject.FindGameObjectWithTag("Herobrine").GetComponent<HerobrineCntrl>().ForceFlee();
+            GameObject.FindGameObjectWithTag("Scanner").GetComponent<ScannerCntrl>().SetState(false);
         }
     }
 
@@ -33,6 +36,5 @@ public class ElevatorCntrl : MonoBehaviour
     public void AnimEnd()
     {
         GameManager.Instance.LevelCompleted();
-        GameObject.FindGameObjectWithTag("Scanner").GetComponent<ScannerCntrl>().SetState(false);
     }
 }

@@ -1,10 +1,11 @@
 using Plugins.Audio.Core;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class HerobrineCntrl : MonoBehaviour
 {
-    public enum AIState { Disabled, Patrolling, Alerted, Chase, DisablingLever };
+    public enum AIState { Disabled, Patrolling, Alerted, Chase, DisablingLever, FleeAway };
 
     public Animator anim;
     public Transform[] pathPoints;
@@ -21,7 +22,9 @@ public class HerobrineCntrl : MonoBehaviour
     public float alertedAnimSpeed = 2f;
     public float chaseAnimSpeed = 2.5f;
 
-    public float chaseStartSoundCD = 20f;
+    public float chaseTime = 15f;
+    public LayerMask defaultLayerMask;
+    public LayerMask withoutPlayerLayerMask;
 
     private NavMeshAgent agent;
     private SourceAudio sfx;
@@ -31,7 +34,7 @@ public class HerobrineCntrl : MonoBehaviour
     private int pathPointId = -1;
     private LeverCntrl leverToDisable = null;
     private bool stateLocked = false;
-    private float prevChaseSoundTime = -100f;
+    private bool chaseCoroutineRunning = false;
 
     private void Start()
     {
@@ -52,29 +55,29 @@ public class HerobrineCntrl : MonoBehaviour
             case AIState.Disabled:
                 break;
             case AIState.Patrolling:
-                if (HaveReachedDestination())
-                {
-                    int newPathPointId = Random.Range(0, pathPoints.Length);
-                    if (newPathPointId == pathPointId) pathPointId++;
-                    if (pathPointId >= pathPoints.Length) newPathPointId = 0;
-                    agent.SetDestination(pathPoints[newPathPointId].position);
-                    pathPointId = newPathPointId;
-                }
-                if (CheckVisibility(player)) ChangeState(AIState.Chase);
+                if (HaveReachedDestination()) MoveToRandomPoint();
+                if (CheckVisibility(player, true, defaultLayerMask)) ChangeState(AIState.Chase);
                 break;
             case AIState.Alerted:
-                if (CheckVisibility(player)) ChangeState(AIState.Chase);
+                if (CheckVisibility(player, true, defaultLayerMask)) ChangeState(AIState.Chase);
                 else if (HaveReachedDestination()) ChangeState(AIState.Patrolling);
                 break;
             case AIState.Chase:
                 agent.SetDestination(player.position);
-                if (!CheckVisibility(player)) ChangeState(AIState.Alerted, true);
+                if (!CheckVisibility(player, true, defaultLayerMask)) ChangeState(AIState.Alerted, true);
                 break;
             case AIState.DisablingLever:
                 if (HaveReachedDestination())
                 {
                     leverToDisable.Cancel();
                     leverToDisable = null;
+                    agent.SetDestination(player.position);
+                    ChangeState(AIState.Alerted);
+                }
+                break;
+            case AIState.FleeAway:
+                if (HaveReachedDestination())
+                {
                     ChangeState(AIState.Patrolling);
                 }
                 break;
@@ -83,18 +86,29 @@ public class HerobrineCntrl : MonoBehaviour
 
     private void ChangeState(AIState newState, bool ignoreSettings=false)
     {
-        if (stateLocked) return;
+        if (stateLocked && newState != AIState.Disabled) return;
         state = newState;
 
         if (ignoreSettings) return;
         switch (newState)
         {
             case AIState.Disabled:
+                if (chaseCoroutineRunning)
+                {
+                    StopCoroutine(nameof(ChaseTimer));
+                    chaseCoroutineRunning = false;
+                }
+
+                runTxt.SetActive(false);
                 pathPointId = -1;
                 agent.isStopped = true;
                 agent.enabled = false;
                 break;
             case AIState.Patrolling:
+                StopCoroutine(nameof(ChaseTimer));
+                chaseCoroutineRunning = false;
+
+                runTxt.SetActive(false);
                 agent.speed = normalSpeed;
                 anim.speed = normalAnimSpeed;
                 break;
@@ -104,19 +118,63 @@ public class HerobrineCntrl : MonoBehaviour
                 pathPointId = -1;
                 break;
             case AIState.Chase:
+                if (!chaseCoroutineRunning)
+                {
+                    StartCoroutine(nameof(ChaseTimer));
+                    chaseCoroutineRunning = true;
+                    sfx.PlayOneShot("startChase");
+                }
+
+                runTxt.SetActive(true);
                 agent.speed = chaseSpeed;
                 anim.speed = chaseAnimSpeed;
                 pathPointId = -1;
-                if (prevChaseSoundTime < Time.time + chaseStartSoundCD)
-                    sfx.PlayOneShot("startChase");
                 break;
             case AIState.DisablingLever:
+                runTxt.SetActive(true);
                 agent.speed = alertedSpeed;
                 anim.speed = alertedAnimSpeed;
                 pathPointId = -1;
                 break;
+            case AIState.FleeAway:
+                runTxt.SetActive(false);
+                agent.speed = alertedSpeed;
+                anim.speed = alertedAnimSpeed;
+                MoveToFurthestPoint();
+                break;
         }
-        runTxt.SetActive(state == AIState.Chase || state == AIState.DisablingLever);
+    }
+
+    private IEnumerator ChaseTimer()
+    {
+        yield return new WaitForSeconds(chaseTime);
+        ChangeState(AIState.FleeAway);
+    }
+
+    private void MoveToRandomPoint()
+    {
+        int newPathPointId = Random.Range(0, pathPoints.Length);
+        if (newPathPointId == pathPointId) pathPointId++;
+        if (pathPointId >= pathPoints.Length) newPathPointId = 0;
+        agent.SetDestination(pathPoints[newPathPointId].position);
+        pathPointId = newPathPointId;
+    }
+
+    private void MoveToFurthestPoint()
+    {
+        int newPathPointId = 0;
+        float maxDist = 0;
+        for (int i = 0; i < pathPoints.Length; i++)
+        {
+            float dist = GameManager.FastDistance(trans.position, pathPoints[i].position);
+            if (dist > maxDist)
+            {
+                newPathPointId = i;
+                maxDist = dist;
+            }
+        }
+        agent.SetDestination(pathPoints[newPathPointId].position);
+        pathPointId = newPathPointId;
     }
 
     private bool HaveReachedDestination()
@@ -135,7 +193,7 @@ public class HerobrineCntrl : MonoBehaviour
 
     public void CheckLeverVisibility(LeverCntrl lever)
     {
-        if (state != AIState.Disabled && CheckVisibility(lever.transform, false))
+        if (state != AIState.Disabled && CheckVisibility(lever.transform, true, withoutPlayerLayerMask))
         {
             ChangeState(AIState.DisablingLever);
             agent.SetDestination(lever.transform.position);
@@ -149,7 +207,7 @@ public class HerobrineCntrl : MonoBehaviour
         return true;
     }
 
-    private bool CheckVisibility(Transform targetTransform, bool checkRaycast=true)
+    private bool CheckVisibility(Transform targetTransform, bool checkRaycast, LayerMask mask)
     {
         if (!checkRaycast)
         {
@@ -159,7 +217,8 @@ public class HerobrineCntrl : MonoBehaviour
         else
         {
             RaycastHit hit;
-            if (Physics.Raycast(trans.position, targetTransform.position - trans.position, out hit, visionDistance))
+
+            if (Physics.Raycast(trans.position, targetTransform.position - trans.position, out hit, visionDistance, mask))
             {
                 if (hit.collider.transform != targetTransform) return false;
                 return true;
@@ -172,6 +231,16 @@ public class HerobrineCntrl : MonoBehaviour
     {
         ChangeState(AIState.Chase);
         stateLocked = true;
+    }
+
+    public void ForceFlee()
+    {
+        if (chaseCoroutineRunning)
+        {
+            StopCoroutine(nameof(ChaseTimer));
+            chaseCoroutineRunning = false;
+        }
+        ChangeState(AIState.FleeAway);
     }
 
     private void OnTriggerEnter(Collider other)

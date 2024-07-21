@@ -61,9 +61,12 @@ public class GameManager : MonoBehaviour
         UpdateLeverCount();
         blackPanel.FadeOut();
 
-        player.SetSensitivity(GameData.data.sensitivity);
-        sensitivitySlider.value = GameData.data.sensitivity;
-        soundToggle.isOn = GameData.data.soundEnabled;
+        if (GameData.data != null)
+        {
+            player.SetSensitivity(GameData.data.sensitivity);
+            sensitivitySlider.value = GameData.data.sensitivity;
+            soundToggle.isOn = GameData.data.soundEnabled;
+        }
         languageDropdown.value = YandexGames.IsRus ? 0 : 1;
     }
 
@@ -81,6 +84,7 @@ public class GameManager : MonoBehaviour
             escapeTxt.gameObject.SetActive(true);
             herobrine.ForceChase();
             elevator.Activate();
+            player.Scanner.EnableElevatorMark(elevator.transform);
             return true;
         }
     }
@@ -108,7 +112,7 @@ public class GameManager : MonoBehaviour
     public void PauseState(bool state)
     {
         isPaused = state;
-        if (isMobile) Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
+        if (!isMobile) Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
         AudioListener.volume = isPaused || !GameData.data.soundEnabled ? 0f : 1f;
         Time.timeScale = isPaused ? 0f : 1f;
         pausePanel.SetActive(isPaused);
@@ -175,5 +179,14 @@ public class GameManager : MonoBehaviour
             GameData.SaveData();
             unsavedSettings = false;
         }
+    }
+
+    // Utility
+    public static float FastDistance(Vector3 pos1, Vector3 pos2)
+    {
+        float xD = pos1.x - pos2.x;
+        float zD = pos1.z - pos2.z;
+        float dist2 = xD * xD + zD * zD;
+        return dist2;
     }
 }
