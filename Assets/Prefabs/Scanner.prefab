@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3456584950506796506}
   - component: {fileID: 482013237049313909}
   - component: {fileID: 6216209372637746058}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: line_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 4772275301587436540}
   - component: {fileID: 6207046709758217452}
   - component: {fileID: 716365144951671340}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: batteryIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 2895596673270299172}
   - component: {fileID: 2798126909737425164}
   - component: {fileID: 8428929414408597141}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Scanner
   m_TagString: Scanner
   m_Icon: {fileID: 0}
@@ -249,7 +249,7 @@ GameObject:
   - component: {fileID: 5662911444644745039}
   - component: {fileID: 936569154639017084}
   - component: {fileID: 7073657068051068829}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: scanGradient
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -324,7 +324,7 @@ GameObject:
   - component: {fileID: 6226833865046873550}
   - component: {fileID: 8486272242256850044}
   - component: {fileID: 7301567701826145250}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -399,7 +399,7 @@ GameObject:
   - component: {fileID: 2017406508012934592}
   - component: {fileID: 6917054226026349740}
   - component: {fileID: 4850648493594241189}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: circle_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -475,7 +475,7 @@ GameObject:
   - component: {fileID: 8239273786424799573}
   - component: {fileID: 9055673888876793025}
   - component: {fileID: 607276239271289284}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: scannerCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -754,7 +754,7 @@ GameObject:
   - component: {fileID: 2914279269504845456}
   - component: {fileID: 3929566560847609833}
   - component: {fileID: 38983308834689563}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: line_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -829,7 +829,7 @@ GameObject:
   - component: {fileID: 8541265060153260150}
   - component: {fileID: 2339023645180696525}
   - component: {fileID: 7448386680130672877}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: enemyMark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -904,7 +904,7 @@ GameObject:
   - component: {fileID: 2915364981305532740}
   - component: {fileID: 6629428094801891145}
   - component: {fileID: 6771132217295888475}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -979,7 +979,7 @@ GameObject:
   - component: {fileID: 779201715844640941}
   - component: {fileID: 5548740773942824726}
   - component: {fileID: 6156585198733252997}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: timeTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1113,7 +1113,7 @@ GameObject:
   - component: {fileID: 8921549835816984668}
   - component: {fileID: 2544982763296275881}
   - component: {fileID: 6611176062573565106}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: line_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1186,7 +1186,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 69800775613153064}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: radar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1234,7 +1234,7 @@ GameObject:
   - component: {fileID: 1332665418482475973}
   - component: {fileID: 2951279246037253970}
   - component: {fileID: 1418953140314402212}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: circle_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1309,7 +1309,7 @@ GameObject:
   - component: {fileID: 8492322563752685782}
   - component: {fileID: 401366509114454045}
   - component: {fileID: 840808257124033220}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1387,7 +1387,7 @@ GameObject:
   - component: {fileID: 4525599684306348050}
   - component: {fileID: 473784391783227528}
   - component: {fileID: 3142357762124266341}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: elevatorMark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1462,7 +1462,7 @@ GameObject:
   - component: {fileID: 8942010806484339105}
   - component: {fileID: 3143811240259519338}
   - component: {fileID: 2850863190649807013}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
