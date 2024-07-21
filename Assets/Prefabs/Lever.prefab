@@ -182,6 +182,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: fa1f8db0afd1b014a91b396d65776f9a, type: 2}
+    - target: {fileID: 336271658553974036, guid: 402f4d6fc1a91c548ac1e34471f4bdb5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 402f4d6fc1a91c548ac1e34471f4bdb5, type: 3}
       propertyPath: m_Name
       value: Lever
@@ -189,6 +193,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 402f4d6fc1a91c548ac1e34471f4bdb5, type: 3}
       propertyPath: m_TagString
       value: Lever
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 402f4d6fc1a91c548ac1e34471f4bdb5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 7307109073415605764, guid: 402f4d6fc1a91c548ac1e34471f4bdb5, type: 3}
       propertyPath: m_Materials.Array.data[0]

@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour
     {
         isPaused = state;
         if (!isMobile) Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
-        AudioListener.volume = isPaused || !GameData.data.soundEnabled ? 0f : 1f;
+        AudioListener.volume = isPaused || (GameData.data != null && !GameData.data.soundEnabled) ? 0f : 1f;
         Time.timeScale = isPaused ? 0f : 1f;
         pausePanel.SetActive(isPaused);
     }

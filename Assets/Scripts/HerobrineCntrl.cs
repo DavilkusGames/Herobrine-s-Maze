@@ -34,6 +34,7 @@ public class HerobrineCntrl : MonoBehaviour
     private int pathPointId = -1;
     private LeverCntrl leverToDisable = null;
     private bool stateLocked = false;
+    private bool canLoosePlayer = false;
     private bool chaseCoroutineRunning = false;
 
     private void Start()
@@ -64,7 +65,7 @@ public class HerobrineCntrl : MonoBehaviour
                 break;
             case AIState.Chase:
                 agent.SetDestination(player.position);
-                if (!CheckVisibility(player, true, defaultLayerMask)) ChangeState(AIState.Alerted, true);
+                if (!CheckVisibility(player, true, defaultLayerMask) && canLoosePlayer) ChangeState(AIState.Alerted, true);
                 break;
             case AIState.DisablingLever:
                 if (HaveReachedDestination())
@@ -105,8 +106,11 @@ public class HerobrineCntrl : MonoBehaviour
                 agent.enabled = false;
                 break;
             case AIState.Patrolling:
-                StopCoroutine(nameof(ChaseTimer));
-                chaseCoroutineRunning = false;
+                if (chaseCoroutineRunning)
+                {
+                    StopCoroutine(nameof(ChaseTimer));
+                    chaseCoroutineRunning = false;
+                }
 
                 runTxt.SetActive(false);
                 agent.speed = normalSpeed;
@@ -121,6 +125,7 @@ public class HerobrineCntrl : MonoBehaviour
                 if (!chaseCoroutineRunning)
                 {
                     StartCoroutine(nameof(ChaseTimer));
+                    canLoosePlayer = false;
                     chaseCoroutineRunning = true;
                     sfx.PlayOneShot("startChase");
                 }
@@ -138,8 +143,8 @@ public class HerobrineCntrl : MonoBehaviour
                 break;
             case AIState.FleeAway:
                 runTxt.SetActive(false);
-                agent.speed = alertedSpeed;
-                anim.speed = alertedAnimSpeed;
+                agent.speed = chaseSpeed * 1.2f;
+                anim.speed = chaseSpeed * 1.2f;
                 MoveToFurthestPoint();
                 break;
         }
@@ -147,7 +152,9 @@ public class HerobrineCntrl : MonoBehaviour
 
     private IEnumerator ChaseTimer()
     {
-        yield return new WaitForSeconds(chaseTime);
+        yield return new WaitForSeconds(chaseTime*0.6f);
+        canLoosePlayer = true;
+        yield return new WaitForSeconds(chaseTime*0.4f);
         ChangeState(AIState.FleeAway);
     }
 
