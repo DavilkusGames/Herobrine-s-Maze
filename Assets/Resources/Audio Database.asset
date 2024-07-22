@@ -18,106 +18,106 @@ MonoBehaviour:
     FolderPath: 
     Name: 
     Preload: 1
-    _id: b8a8154b-699a-4263-a349-e17360c32976
+    _id: 66dac3de-3ce0-4c92-b846-f46b5601a7c1
   - Clip: {fileID: 8300000, guid: 11338d72d1fb018409c05a112d9ed03a, type: 3}
     Key: startChase
     FolderPath: 
     Name: 
     Preload: 1
-    _id: ebe72e76-b771-48d6-abd6-88a0780f4de6
+    _id: f03b7012-2321-4ba3-b0b7-7b5b347e867d
   - Clip: {fileID: 8300000, guid: b1555ae403950e141801d48cec0c882c, type: 3}
     Key: elevatorSignal
     FolderPath: 
     Name: 
     Preload: 1
-    _id: 92f8a386-2ee9-48bf-ba14-b5b483637b0c
+    _id: 0eb44b4b-ef07-4613-a1b2-35aaeaa1cc38
   - Clip: {fileID: 8300000, guid: 42da20118ad4d374d987dde296903b2a, type: 3}
     Key: Step_5
     FolderPath: 
     Name: 
     Preload: 1
-    _id: c8838d56-e7f0-4a21-b7e3-5e6d2a403fd4
+    _id: 24610773-6a74-4512-952f-ed78fdd08b2e
   - Clip: {fileID: 8300000, guid: 824999413d6d3124baab78a2bf41f8bd, type: 3}
     Key: Step_1
     FolderPath: 
     Name: 
     Preload: 1
-    _id: ae89a89b-6fca-46e0-88ff-edc72b97b4db
+    _id: a6d42673-53e1-47c4-b94a-96e561876819
   - Clip: {fileID: 8300000, guid: 33d0699a2acbb6c4bab3d5e61e2dde87, type: 3}
     Key: menuMusic
     FolderPath: 
     Name: 
     Preload: 1
-    _id: 4a6c7b29-6cee-4a56-acdf-774e357212ef
+    _id: 02f460fb-d150-4a2a-8081-ded1f127a355
   - Clip: {fileID: 8300000, guid: 4569137818db4104fbdd7a15e497ebee, type: 3}
     Key: Step_6
     FolderPath: 
     Name: 
     Preload: 1
-    _id: a6fa4e1d-0613-4d2c-8ea4-e0573892cebb
+    _id: 6fa089bb-ea45-4b3b-95aa-603a48810c0a
   - Clip: {fileID: 8300000, guid: 754d8f520faab8045b22458f21b7113a, type: 3}
     Key: Step_4
     FolderPath: 
     Name: 
     Preload: 1
-    _id: f669bb8d-2404-45ce-9d5c-ad5de76e650a
+    _id: 8b74b4b0-de18-4514-9db2-b942410df44b
   - Clip: {fileID: 8300000, guid: e5b34735ba9139d418bd4dad6af8466c, type: 3}
     Key: mtBeep
     FolderPath: 
     Name: 
     Preload: 1
-    _id: e7b91f14-389d-4a41-81e6-f46a8f84b6ca
+    _id: 408aafed-1a7b-43c8-8c4b-7bf07178eb78
   - Clip: {fileID: 8300000, guid: 267a4ff0dbdc7da4897adff7e2c406fc, type: 3}
     Key: elevatorRide
     FolderPath: 
     Name: 
     Preload: 1
-    _id: 64cb4000-96af-4b95-93a2-ca5634f7dfa4
+    _id: c1ea4c7b-56ac-4fec-b15a-7d6a92881d9a
   - Clip: {fileID: 8300000, guid: 6648139024a0f90419999a3787032755, type: 3}
     Key: jumpscare
     FolderPath: 
     Name: 
     Preload: 1
-    _id: b58a1358-11c2-47bd-a457-727665bf67b5
+    _id: f34b3c36-0c02-4887-94bd-f7084052392c
   - Clip: {fileID: 8300000, guid: b8c65a4b5046b384e9bccb87ef5f36d5, type: 3}
     Key: Step_8
     FolderPath: 
     Name: 
     Preload: 1
-    _id: 8587f379-7343-40fd-aa70-959ce365c1e1
+    _id: ec7e384b-fdf6-4550-a8b3-54bec1e03aa0
   - Clip: {fileID: 8300000, guid: e81ce9560b32c2040b3e77f7d501ece9, type: 3}
     Key: Step_3
     FolderPath: 
     Name: 
     Preload: 1
-    _id: 60f1f8ac-7709-4e27-8ab5-9aee10dfa4dc
+    _id: f09fde10-2686-4274-8d4f-e58d2d118fa3
   - Clip: {fileID: 8300000, guid: f90978b26a095da4d89709f4c524fdc8, type: 3}
     Key: ambience
     FolderPath: 
     Name: 
     Preload: 1
-    _id: 00447024-c60f-4457-b6f9-dd26e489acf9
+    _id: 5171a273-01e1-40d1-b66d-2d05453a2fff
   - Clip: {fileID: 8300000, guid: 6b5b1f0734ecd6a40a028d5da0bf7ef4, type: 3}
     Key: leverFlip
     FolderPath: 
     Name: 
     Preload: 1
-    _id: 9d36de54-3bbf-49f4-8a69-8bac05db1ee2
+    _id: e0fee402-b8ee-4cac-9e42-372154d72f5a
   - Clip: {fileID: 8300000, guid: 4e31baadf7980fd47901e2781adae6cc, type: 3}
     Key: elevatorDoors
     FolderPath: 
     Name: 
     Preload: 1
-    _id: 0e22ea2b-69b0-4b17-bddc-a374e92c45c6
+    _id: f76e3998-9fe2-4255-b5dd-aa714e660d70
   - Clip: {fileID: 8300000, guid: ae8e0b4c8e7a98340bc5a9f8b49196a5, type: 3}
     Key: Step_2
     FolderPath: 
     Name: 
     Preload: 1
-    _id: d51a34f1-a937-4523-8e91-461321c48273
+    _id: e75406b1-e630-49ec-8923-b03577f03e34
   - Clip: {fileID: 8300000, guid: def170fea4a9a764b868c9bae26bb919, type: 3}
     Key: Step_7
     FolderPath: 
     Name: 
     Preload: 1
-    _id: 4bb9bdfb-def3-4244-8545-7591acd071b5
+    _id: 90a38551-5b03-4db7-b527-236d05119335
