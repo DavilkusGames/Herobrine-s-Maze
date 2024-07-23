@@ -4143,11 +4143,11 @@ GameObject:
   m_Component:
   - component: {fileID: 348760104}
   m_Layer: 0
-  m_Name: path0_5
+  m_Name: path_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &348760104
 Transform:
@@ -8761,11 +8761,11 @@ GameObject:
   m_Component:
   - component: {fileID: 691602868}
   m_Layer: 0
-  m_Name: path0_4
+  m_Name: path_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &691602868
 Transform:
@@ -16451,11 +16451,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1394613437}
   m_Layer: 0
-  m_Name: path0_2
+  m_Name: path_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1394613437
 Transform:
@@ -17930,11 +17930,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1482926210}
   m_Layer: 0
-  m_Name: path0_1
+  m_Name: path_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1482926210
 Transform:
@@ -19556,11 +19556,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1593347100}
   m_Layer: 0
-  m_Name: path0_3
+  m_Name: path_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1593347100
 Transform:
@@ -24474,11 +24474,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2028630949}
   m_Layer: 0
-  m_Name: path0
+  m_Name: path_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2028630949
 Transform:

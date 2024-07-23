@@ -285,7 +285,7 @@ MonoBehaviour:
   leverLightColors:
   - {r: 1, g: 0, b: 0, a: 0}
   - {r: 0.03297935, g: 1, b: 0.022012413, a: 0}
-  playerToLightDist: 15
+  playerToLightDist: 45
 --- !u!114 &3812557634693432202
 MonoBehaviour:
   m_ObjectHideFlags: 0

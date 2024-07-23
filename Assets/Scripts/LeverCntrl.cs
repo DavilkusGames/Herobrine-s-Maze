@@ -30,7 +30,7 @@ public class LeverCntrl : MonoBehaviour
 
     private void Update()
     {
-        leverLight.enabled = (Vector3.Distance(trans.position, player.position) <= playerToLightDist);
+        leverLight.enabled = (GameManager.FastDistance(trans.position, player.position) <= playerToLightDist);
     }
 
     public void Interact()
