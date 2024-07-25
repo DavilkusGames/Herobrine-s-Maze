@@ -23,6 +23,9 @@ public class YandexGames : MonoBehaviour
     private static extern string GetLang();
 
     [DllImport("__Internal")]
+    private static extern string GetDomain();
+
+    [DllImport("__Internal")]
     private static extern bool IsMobilePlatform();
 
     [DllImport("__Internal")]
@@ -47,6 +50,7 @@ public class YandexGames : MonoBehaviour
     public static bool IsRus { get; private set; }
     public static bool IsAuth { get; private set; }
     public static bool IsMobile { get; private set; }
+    public static string Domain { get; private set; }
 
     private static string[] RusLangDomens = { "ru", "be", "kk", "uk", "uz" };
     private List<TextTranslator> translateQueue = new List<TextTranslator>();
@@ -220,9 +224,16 @@ public class YandexGames : MonoBehaviour
         while (!SDKInit()) yield return new WaitForSeconds(0.2f);
         IsInit = true;
         prevAdShowTime = Time.time;
+
         IsRus = RusLangDomens.Contains(GetLang());
-        IsMobile = IsMobilePlatform();
         Debug.Log("IsRus: " + IsRus.ToString());
+
+        Domain = GetDomain();
+        Debug.Log("Domain: " + Domain);
+
+        IsMobile = IsMobilePlatform();
+        Debug.Log("IsMobile: " + IsMobile.ToString());
+
         foreach (var text in translateQueue) text.UpdateText();
 
         while (!PlayerInit()) yield return new WaitForSeconds(0.2f);

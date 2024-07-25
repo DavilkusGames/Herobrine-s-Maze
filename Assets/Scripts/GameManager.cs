@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
     public GameObject[] keyTips;
     public TextTranslator leverCountTxt;
     public TextTranslator escapeTxt;
-    public GameObject levelCompletedTxt;
     public BlackPanelCntrl blackPanel;
 
     public Slider sensitivitySlider;
@@ -129,23 +128,21 @@ public class GameManager : MonoBehaviour
 
         blackPanel.FadeIn(() =>
         {
-            levelCompletedTxt.SetActive(true);
-            AudioListener.volume = 0f;
-            Invoke(nameof(ToMainMenu), 4f);
+            Time.timeScale = 1f;
+            if (GameData.data.soundEnabled) AudioListener.volume = 1f;
+
+            LevelCompletedSceneManager.CompletedLevelId = levelId;
+            SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 2);
         });
     }
 
     public void GameOver()
     {
-        DeathSceneManager.FailedLevelId = levelId;
-        SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings-1);
-    }
-
-    public void ToMainMenu()
-    {
         Time.timeScale = 1f;
         if (GameData.data.soundEnabled) AudioListener.volume = 1f;
-        YandexGames.Instance.ShowAd(() => SceneManager.LoadScene(0));
+
+        DeathSceneManager.FailedLevelId = levelId;
+        SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings-1);
     }
 
     public void ChangeSensitivity(float sens)
@@ -179,6 +176,13 @@ public class GameManager : MonoBehaviour
             GameData.SaveData();
             unsavedSettings = false;
         }
+    }
+
+    public void ToMainMenu()
+    {
+        Time.timeScale = 1f;
+        if (GameData.data.soundEnabled) AudioListener.volume = 1f;
+        SceneManager.LoadScene(0);
     }
 
     // Utility

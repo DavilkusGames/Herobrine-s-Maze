@@ -60,6 +60,8 @@ public class PlayerCntrl : MonoBehaviour
         {
             JoystickRight.rotY = 0f;
             JoystickRight.rotX = camX;
+            JoystickLeft.positionX = 0f;
+            JoystickLeft.positionY = 0f;
         }
     }
 

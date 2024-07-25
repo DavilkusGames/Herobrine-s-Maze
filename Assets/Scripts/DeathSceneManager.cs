@@ -13,11 +13,11 @@ public class DeathSceneManager : MonoBehaviour
 
     public void Retry()
     {
-        SceneManager.LoadScene(FailedLevelId+1);
+        YandexGames.Instance.ShowAd(() => SceneManager.LoadScene(FailedLevelId + 1)); 
     }
 
     public void MainMenu()
     {
-        SceneManager.LoadScene(0);
+        YandexGames.Instance.ShowAd(() => SceneManager.LoadScene(0));
     }
 }

@@ -83,7 +83,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void MoreGames()
     {
-        Application.OpenURL(devGamesURL);
+        Application.OpenURL(devGamesURL.Replace("{domain}", YandexGames.Domain));
     }
 
     private void Start()

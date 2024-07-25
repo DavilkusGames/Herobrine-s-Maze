@@ -38,6 +38,14 @@
     return buffer;
   },
 
+  GetDomain: function () {
+    var domain = ysdk.environment.i18n.tld;
+    var bufferSize = lengthBytesUTF8(domain) + 1;
+    var buffer = _malloc(bufferSize);
+    stringToUTF8(domain, buffer, bufferSize);
+    return buffer;
+  },
+
   IsMobilePlatform: function () {
     var userAgent = navigator.userAgent;
         isMobile = (
