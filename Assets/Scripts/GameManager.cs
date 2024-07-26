@@ -158,7 +158,7 @@ public class GameManager : MonoBehaviour
         if (GameData.data.soundEnabled == state) return;
         GameData.data.soundEnabled = state;
         unsavedSettings = true;
-        AudioListener.volume = GameData.data.soundEnabled ? 1f : 0f;
+        if (!isPaused) AudioListener.volume = GameData.data.soundEnabled ? 1f : 0f;
     }
 
     public void ForceChangeLang(int langId)
