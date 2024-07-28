@@ -42,6 +42,9 @@ public class YandexGames : MonoBehaviour
 
     [DllImport("__Internal")]
     private static extern void LoadCloudData();
+    [DllImport("__Internal")]
+    private static extern void CheckPromoFlag();
+
 
     public delegate void RewardedCallback(bool isRewarded);
 
@@ -51,6 +54,7 @@ public class YandexGames : MonoBehaviour
     public static bool IsAuth { get; private set; }
     public static bool IsMobile { get; private set; }
     public static string Domain { get; private set; }
+    public static bool IsPromoActive { get; private set; }
 
     private static string[] RusLangDomens = { "ru", "be", "kk", "uk", "uz" };
     private List<TextTranslator> translateQueue = new List<TextTranslator>();
@@ -218,6 +222,13 @@ public class YandexGames : MonoBehaviour
         foreach (var text in translateQueue) text.UpdateText();
     }
 
+    public void PromoActive()
+    {
+        IsPromoActive = true;
+        Debug.Log("Promo is active");
+        MainMenuManager.Instance?.PromoIsActive();
+    }
+
     private IEnumerator WaitForSDKInit()
     {
         yield return new WaitForSeconds(0.5f);
@@ -240,6 +251,7 @@ public class YandexGames : MonoBehaviour
         IsAuth = AuthCheck();
         Debug.Log("IsAuth: " + IsAuth.ToString());
 
+        CheckPromoFlag();
         GameData.LoadData();
     }
 }

@@ -109,4 +109,12 @@
         myGameInstance.SendMessage("_yandexGames", "DataLoaded", dataJSON);
     });
   },
+
+  CheckPromoFlag : function () {
+    ysdk.getFlags().then(flags => {
+        if (flags.promo_active === "True") {
+            myGameInstance.SendMessage("_yandexGames", "PromoActive");
+        }
+    });
+  },
 });

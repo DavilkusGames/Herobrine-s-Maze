@@ -35,7 +35,7 @@ public class MainMenuManager : MonoBehaviour
             GameData.SaveData();
         }
 
-        for (int i = 0; i < levelsLockPanels.Length; i++) levelsLockPanels[i].SetActive(!GameData.data.levelsUnlocked[i]);
+        for (int i = 0; i < levelsLockPanels.Length; i++) levelsLockPanels[i].SetActive(!(GameData.data.levelsUnlocked[i] || YandexGames.IsPromoActive));
         for (int i = 0; i < levelsCompleteIcons.Length; i++) levelsCompleteIcons[i].SetActive(GameData.data.levelsCompleted[i]);
 
         sensitivitySlider.value = GameData.data.sensitivity;
@@ -46,7 +46,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void PlayGame(int levelId)
     {
-        if (GameData.data.levelsUnlocked[levelId])
+        if (GameData.data.levelsUnlocked[levelId] || YandexGames.IsPromoActive)
         {
             loadingPanel.SetActive(true);
             selectedLevelId = levelId;
@@ -57,6 +57,11 @@ public class MainMenuManager : MonoBehaviour
             levelAdsUnlockId = levelId;
             adConfirmPanel.SetActive(true);
         }
+    }
+
+    public void PromoIsActive()
+    {
+        for (int i = 0; i < levelsLockPanels.Length; i++) levelsLockPanels[i].SetActive(false);
     }
 
     public void ConfirmAdsLevelUnlock()

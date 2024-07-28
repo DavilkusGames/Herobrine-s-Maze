@@ -34,7 +34,6 @@ public class HerobrineCntrl : MonoBehaviour
     private int pathPointId = -1;
     private LeverCntrl leverToDisable = null;
     private bool stateLocked = false;
-    private bool canLoosePlayer = false;
     private bool chaseCoroutineRunning = false;
 
     private void Start()
@@ -42,7 +41,7 @@ public class HerobrineCntrl : MonoBehaviour
         trans = transform;
         agent = GetComponent<NavMeshAgent>();
         sfx = GetComponent<SourceAudio>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = player.transform;
 
         state = AIState.Patrolling;
         agent.speed = normalSpeed;
@@ -65,7 +64,6 @@ public class HerobrineCntrl : MonoBehaviour
                 break;
             case AIState.Chase:
                 agent.SetDestination(player.position);
-                if (!CheckVisibility(player, true, defaultLayerMask) && canLoosePlayer) ChangeState(AIState.Alerted, true);
                 break;
             case AIState.DisablingLever:
                 if (HaveReachedDestination())
@@ -125,7 +123,6 @@ public class HerobrineCntrl : MonoBehaviour
                 if (!chaseCoroutineRunning)
                 {
                     StartCoroutine(nameof(ChaseTimer));
-                    canLoosePlayer = false;
                     chaseCoroutineRunning = true;
                     sfx.PlayOneShot("startChase");
                 }
@@ -152,9 +149,7 @@ public class HerobrineCntrl : MonoBehaviour
 
     private IEnumerator ChaseTimer()
     {
-        yield return new WaitForSeconds(chaseTime*0.6f);
-        canLoosePlayer = true;
-        yield return new WaitForSeconds(chaseTime*0.4f);
+        yield return new WaitForSeconds(chaseTime);
         ChangeState(AIState.FleeAway);
     }
 
